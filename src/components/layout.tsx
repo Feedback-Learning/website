@@ -23,7 +23,7 @@ export function Layout({ session, children }: PropsWithChildren<Props>) {
             </Link>
           </h1> */}
         </header>
-        <main className="w-full h-full flex flex-1 justify-center items-center p-4">{children}</main>
+        <main className="w-full h-full flex flex-1 flex-row justify-center items-center p-4 gap-4">{children}</main>
         <footer className="flex justify-center items-center p-4">
           Bleh!
         </footer>

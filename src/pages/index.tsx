@@ -1,12 +1,13 @@
 import { type NextPage } from "next";
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import Head from "next/head";
 import React from "react";
-import { useSession } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Layout } from "../components/layout";
-import Reaction from "../components/Reaction";
-import Message from "../components/Message";
 
 const Home: NextPage = () => {
+  let supabaseClient = useSupabaseClient()
+  const user = useUser();
         
   const session = useSession()
 
@@ -19,17 +20,16 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#ffffff] to-[#e4d1ff]">
         <Layout session={session}>
-          <div className="flex flex-col justify-center items-center w-24 h-fit gap-4">
-            <div className="grid grid-cols-2 gap-2 w-fit">
-              <Reaction>👍</Reaction>
-              <Reaction>👎</Reaction>
-              <Reaction>😲</Reaction>
-              <Reaction>🤔</Reaction>
-              <Reaction>🎉</Reaction>
-              <Reaction>👏</Reaction>
-            </div>
-            <Message/>
-          </div>
+          {(!user) ?
+            <Auth redirectTo="http://localhost:3000/" appearance={{ theme: ThemeSupa }} supabaseClient={supabaseClient} providers={['google']} socialLayout="horizontal"/>
+            :
+            <>
+              <div className="p-4 bg-white rounded-full select-none cursor-pointer shadow-md active:translate-y-0.5"> Create a class </div>
+              <div className="p-4 bg-white rounded-full select-none cursor-pointer shadow-md active:translate-y-0.5"> Join a class </div>
+              <div className="p-4 bg-white rounded-full select-none cursor-pointer shadow-md active:translate-y-0.5" onClick={() => supabaseClient.auth.signOut()}>Sign out</div>
+            </>
+          }
+          
         </Layout>
       </main>
     </>
