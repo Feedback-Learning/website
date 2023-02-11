@@ -13,13 +13,8 @@ export function Layout({ session, children }: PropsWithChildren<Props>) {
       <Head>
         <title>Next.js + TypeScript + Supabase + TailwindCSS</title>
       </Head>
-      <div className="flex flex-col justify-end items-center bg-gradient-to-b from-[#ffffff] to-[#e4d1ff]">
-        {/* <header className="flex justify-between">
-        </header> */}
-        <main className="w-full pl-10 pb-10 pr-10 flex flex-col justify-end h-screen overflow-hidden">{children}</main>
-        {/* <footer className="flex justify-center items-center p-4">
-          Bleh!
-        </footer> */}
+      <div className="w-screen h-screen bg-gradient-to-b from-[#ffffff] to-[#e4d1ff]">
+        <main className="w-full h-full">{children}</main>
       </div>
     </>
   )

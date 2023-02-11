@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout session={session}>
-        <div className="flex flex-col justify-end items-center w-full h-full gap-4">
+        <div className="flex flex-col justify-end items-center w-full h-full pl-10 pb-10 pr-10 gap-4 overflow-hidden">
           <Chat/>
           <div className="flex flex-row justify-between gap-2 w-full">
             <Reaction>👍</Reaction>
