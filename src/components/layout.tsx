@@ -13,20 +13,13 @@ export function Layout({ session, children }: PropsWithChildren<Props>) {
       <Head>
         <title>Next.js + TypeScript + Supabase + TailwindCSS</title>
       </Head>
-      <div className="flex flex-col min-h-screen">
-        <header className="flex justify-between">
-          {/* <h1>
-            <Link href="/" legacyBehavior>
-              <a className="text-red-800 hover:text-red-700 drop-shadow">
-                Next.js + TypeScript + Supabase + TailwindCSS
-              </a>
-            </Link>
-          </h1> */}
-        </header>
-        <main className="w-full h-full flex flex-1 flex-row justify-center items-center p-4 gap-4">{children}</main>
-        <footer className="flex justify-center items-center p-4">
+      <div className="flex flex-col justify-end items-center bg-gradient-to-b from-[#ffffff] to-[#e4d1ff]">
+        {/* <header className="flex justify-between">
+        </header> */}
+        <main className="w-full pl-10 pb-10 pr-10 flex flex-col justify-end h-screen overflow-hidden">{children}</main>
+        {/* <footer className="flex justify-center items-center p-4">
           Bleh!
-        </footer>
+        </footer> */}
       </div>
     </>
   )
