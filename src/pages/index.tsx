@@ -3,7 +3,7 @@ import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import Head from "next/head";
 import React from "react";
 import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { Layout } from "../components/layout";
+import { Layout } from "../components/Layout";
 
 const Home: NextPage = () => {
   let supabaseClient = useSupabaseClient()

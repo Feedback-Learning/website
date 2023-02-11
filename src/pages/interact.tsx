@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import { useSession } from "@supabase/auth-helpers-react";
-import { Layout } from "../components/layout";
+import { Layout } from "../components/Layout";
 import Reaction from "../components/Reaction";
 import Message from "../components/Message";
 
