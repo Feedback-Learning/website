@@ -1,13 +1,14 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
-
-import { api } from "../utils/api";
 import React from "react";
+import { useSession } from "@supabase/auth-helpers-react";
+import { Layout } from "../components/layout";
+import Reaction from "../components/Reaction";
+import Message from "../components/Message";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+        
+  const session = useSession()
 
   return (
     <>
@@ -17,58 +18,22 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#ffffff] to-[#e4d1ff]">
-        <div className="flex flex-col justify-center items-center w-24 h-fit gap-4">
-          <div className="grid grid-cols-2 gap-2 w-fit">
-            <Reaction>👍</Reaction>
-            <Reaction>👎</Reaction>
-            <Reaction>😲</Reaction>
-            <Reaction>🤔</Reaction>
-            <Reaction>🎉</Reaction>
-            <Reaction>👏</Reaction>
+        <Layout session={session}>
+          <div className="flex flex-col justify-center items-center w-24 h-fit gap-4">
+            <div className="grid grid-cols-2 gap-2 w-fit">
+              <Reaction>👍</Reaction>
+              <Reaction>👎</Reaction>
+              <Reaction>😲</Reaction>
+              <Reaction>🤔</Reaction>
+              <Reaction>🎉</Reaction>
+              <Reaction>👏</Reaction>
+            </div>
+            <Message/>
           </div>
-          <MessageInput></MessageInput>
-        </div>
+        </Layout>
       </main>
     </>
   );
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined },
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
-  );
-};
-
-function Reaction(props: { children: string }) {
-  return (
-    <div className="w-10 h-10 flex justify-center items-center bg-white rounded-full drop-shadow-md select-none cursor-pointer active:translate-y-0.5 hover:bg-gray-100">
-      {props.children}
-    </div>
-  );
-}
-
-function MessageInput() {
-  return (
-    <input type="text" className="w-full rounded-full p-2"></input>
-  )
-}
