@@ -8,16 +8,30 @@ function ChatInput() {
 
   const router = useRouter()
 
+  const [roomCode, setRoomCode] = useState<number>()
+
+  useEffect(() => {
+    if (!router.query || router.query == null || Object.keys(router.query).length == 0) return;
+    if (router.query.class == null) {
+      router.push('/')
+      return;
+    }
+    setRoomCode(parseInt(router.query.class as string))
+  }, [router])
+
   const session = useSession()
   const user = useUser();
 
   async function sendMessage() {
-    console.log(user)
+    if (messageText.trim().length == 0) {
+      return
+    }
+
     let messageObject = {
       content: messageText,
       is_reaction: false,
       user: user?.id,
-      class: 2
+      class: roomCode
     }
     const { data, error } = await supabase.from('messages').insert(messageObject)
     console.log(data)
@@ -25,7 +39,7 @@ function ChatInput() {
 
   }
 
-  return (
+  return router.query.class == null ? <></> : (
     <div className="flex flex-row w-full h-14 bg-white rounded-full px-4 text-3xl shadow-md">
       <input type="text" className="flex-auto w-8/12 h-full bg-transparent ml-2" onChange={(event) => { setMessageText(event.target.value) }}></input>
       <div className="h-full flex justify-center items-center leading-none active:scale-110" onClick={sendMessage}>
