@@ -5,7 +5,6 @@ import React, { Dispatch, FormEvent, MouseEventHandler, SetStateAction, useEffec
 import { User, useSession, useSupabaseClient, useUser, Session } from "@supabase/auth-helpers-react";
 import { Layout } from "../components/Layout";
 import Button from "../components/Button";
-import { supabase, UserObject } from "../utils/supabaseClient";
 import { Database } from '../utils/database'
 import { useRouter } from "next/router";
 type Profiles = Database['public']['Tables']['profiles']['Row']

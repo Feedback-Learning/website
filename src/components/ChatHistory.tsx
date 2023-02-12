@@ -79,6 +79,7 @@ function ChatHistory() {
               id: ""
             },
             created_at: new Date().toUTCString(),
+            error: true,
           } 
         ])
       }
