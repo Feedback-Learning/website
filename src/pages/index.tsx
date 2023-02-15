@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 type Profiles = Database['public']['Tables']['profiles']['Row']
 
 const Home: NextPage = () => {
-  let supabaseClient = useSupabaseClient<Database>()
+  const supabaseClient = useSupabaseClient<Database>()
   const user = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    getProfile()
+    getProfile().catch(error => console.log(error))
   }, [session])
 
   const Dashboard = (props : { session: Session}) => {
@@ -53,8 +53,8 @@ const Home: NextPage = () => {
     return (<div className="h-full flex flex-col justify-center items-center gap-3">
       <h1> Welcome {name}</h1>
       <input type="text" onChange={(event) => setClassId(event.target.value)} placeholder="Enter a class code..."></input>
-      <Button onClick={() => { router.push(`/interact?class=${classId}`)}}>Join a class</Button>
-      <Button onClick={() => supabaseClient.auth.signOut()}>Sign out</Button>
+      <Button onClick={() => { router.push(`/interact?class=${classId as string}`).catch(error => {console.log(error)})}}>Join a class</Button>
+      <Button onClick={() => { supabaseClient.auth.signOut().catch(error => {console.log(error)}) } }>Sign out</Button>
     </div>)
   }
   return (
@@ -101,13 +101,13 @@ function ProfileForm(props: {session: Session}) {
 
   return (
     <div className="w-full h-full flex justify-center items-center flex-col gap-4">
-      <h1> Let's get to know you... </h1>
+      <h1> Let&apos;s get to know you... </h1>
       <label>Name: </label>
       <input type="text"  onChange={(event) => setName(event.target.value)}></input>
       <label>Pronouns: </label>
       <input type="text" onChange={(event) => setPronouns(event.target.value)}></input>
       <div className="h-fit w-fit">
-        <Button onClick={submitProfileData}>
+        <Button onClick={() => { submitProfileData().catch(error => {console.log(error)}) }}>
           Next
         </Button>
       </div>

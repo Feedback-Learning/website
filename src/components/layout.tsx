@@ -1,13 +1,9 @@
 import { AuthSession } from '@supabase/supabase-js'
 import Head from 'next/head'
 import Link from 'next/link'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 
-export interface Props {
-  // session: AuthSession | null
-}
-// 
-export function Layout({ children }: PropsWithChildren<Props>) {
+export function Layout({ children }: {children: ReactNode}) {
   return (
     <>
       <Head>

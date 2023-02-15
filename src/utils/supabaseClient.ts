@@ -21,8 +21,8 @@ export interface PayloadObject {
   eventType: string,
   new: MessageObject,
   old: MessageObject,
-  schema: String,
-  table: String
+  schema: string,
+  table: string
 }
 
 export interface UserObject {

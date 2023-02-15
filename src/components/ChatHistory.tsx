@@ -34,9 +34,9 @@ function ChatHistory() {
       { event: 'INSERT', schema: 'public', table: 'messages', filter: `class=eq.${classId}` },
       (payload) => {
         console.log(payload)
-        let message: Messages = (payload.new as unknown) as Messages
+        const message: Messages = (payload.new as unknown) as Messages
         fetchUser(message.user as string).then((user) => {
-          let newMessage = message as unknown as {
+          const newMessage = message as unknown as {
             user: Profiles
           }
           
@@ -47,7 +47,7 @@ function ChatHistory() {
           }
 
           setChatMessages((messages) => [message, ...messages])
-        })
+        }).catch(error => { console.log(error) })
       }
     )
     .subscribe()
@@ -67,21 +67,7 @@ function ChatHistory() {
         setClass(data);
         subscribeToClass(data.id);
       } else {
-        setChatMessages(() => [
-          {
-            class: 0,
-            content: "Error! Class ID is invalid.",
-            id: -1,
-            is_reaction: false,
-            user: {
-              name: "System Message",
-              pronouns: "",
-              id: ""
-            },
-            created_at: new Date().toUTCString(),
-            error: true,
-          } 
-        ])
+        throw Error("No data")
       }
     } catch (error) {
       alert(`Error: ${JSON.stringify(error)}`)
@@ -93,10 +79,10 @@ function ChatHistory() {
   useEffect(() => {
     if (!router.query || router.query == null || Object.keys(router.query).length == 0) return;
     if (router.query.class == null) {
-      router.push('/')
+      router.push('/').catch(error => {console.log(error)})
       return;
     }
-    getClass(router.query.class as string)
+    getClass(router.query.class as string).catch(error => {console.log(error)})
   }, [router])
 
   return (
