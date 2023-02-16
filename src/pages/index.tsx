@@ -9,6 +9,8 @@ import { Database } from '../utils/database'
 import { useRouter } from "next/router";
 type Profiles = Database['public']['Tables']['profiles']['Row']
 
+const REDIRECT_URL = process.env.URL
+
 const Home: NextPage = () => {
   const supabaseClient = useSupabaseClient<Database>()
   const user = useUser();
@@ -62,7 +64,7 @@ const Home: NextPage = () => {
       <Layout>
         {
           (!session) ?
-            <Auth redirectTo="http://localhost:3000/" appearance={{ theme: ThemeSupa }} supabaseClient={supabaseClient} providers={['google']} socialLayout="horizontal"/>
+            <Auth redirectTo={REDIRECT_URL} appearance={{ theme: ThemeSupa }} supabaseClient={supabaseClient} providers={['google']} socialLayout="horizontal"/>
             :
             (!hasProfile) ?
               <ProfileForm session={session}/> 
